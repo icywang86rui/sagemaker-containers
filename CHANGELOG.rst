@@ -3,9 +3,11 @@ CHANGELOG
 =========
 
 2.2.5dev
-=====
+========
 
 * feature: Transformer: support user-supplied ``transform_fn``
+* feature: Make it optional for run_module method to wait for the subprocess to exit
+* feature: Add sagemaker_parameter_server_num to TrainingEnv
 
 2.2.4
 =====
