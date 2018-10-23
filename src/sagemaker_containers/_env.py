@@ -522,6 +522,7 @@ class TrainingEnv(_Env):
 
         self._hosts = hosts
         self._network_interface_name = network_interface_name
+        self._parameter_server_num = sagemaker_hyperparameters.get(_params.PARAMETER_SERVER_NUM_PARAM)
         self._hyperparameters = split_result.excluded
         self._resource_config = resource_config
         self._input_data_config = input_data_config
@@ -549,6 +550,15 @@ class TrainingEnv(_Env):
             str: the training job name.
         """
         return self._job_name
+
+    @property
+    def parameter_server_num(self):  # type: () -> int
+        """The number of parameter servers user specified.
+
+        Returns:
+            int: number of parameter servers.
+        """
+        return self._parameter_server_num
 
     def to_cmd_args(self):
         """Command line arguments representation of the training environment.
