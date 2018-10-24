@@ -561,7 +561,9 @@ class TrainingEnv(_Env):
             not in SAGEMAKER_HYPERPARAMETERS will be included here.
 
         Returns:
-            dict: additional framework hyperparameters
+            dict: additional framework hyperparameters, SageMaker Python SDK adds hyperparameters with a prefix
+            **sagemaker_** during training. These hyperparameters are framework independent settings and are not
+            defined by the user.
         """
         return self._additional_framework_parameters
 
