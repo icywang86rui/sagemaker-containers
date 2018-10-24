@@ -2,12 +2,16 @@
 CHANGELOG
 =========
 
-2.2.5dev
+2.2.6dev
 ========
 
-* feature: Transformer: support user-supplied ``transform_fn``
 * feature: Make it optional for run_module method to wait for the subprocess to exit
-* feature: Add sagemaker_parameter_server_num to TrainingEnv
+* feature: Allow addtional sagemaker hyperparameters to be stored in TrainingEnv
+
+2.2.5
+=====
+
+* feature: Transformer: support user-supplied ``transform_fn``
 
 2.2.4
 =====
