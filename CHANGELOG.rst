@@ -2,6 +2,11 @@
 CHANGELOG
 =========
 
+1.1.2
+=====
+
+* bug-fix: Only load hosting environment variables once when each work starts
+
 1.1.1
 =====
 
