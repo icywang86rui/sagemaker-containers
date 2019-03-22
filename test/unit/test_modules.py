@@ -187,12 +187,31 @@ def test_run_module_wait(download_and_extract, write_env_vars, install, run, wai
 @patch('sagemaker_containers._modules.install')
 @patch('importlib.import_module')
 @patch('six.moves.reload_module')
-def test_import_module(reload, import_module, install, download_and_extract):
+@patch('sagemaker_containers._modules.exists')
+def test_import_module(exists, reload, import_module, install, download_and_extract):
 
+    exists.return_value = False
     _modules.import_module('s3://bucket/my-module')
 
-    download_and_extract.assert_called_with('s3://bucket/my-module', 'default_user_module_name', _env.code_dir)
+    exists.assert_called_with(_modules.DEFAULT_MODULE_NAME)
+    download_and_extract.assert_called_with('s3://bucket/my-module', _modules.DEFAULT_MODULE_NAME, _env.code_dir)
     install.assert_called_with(_env.code_dir)
+    reload.assert_called_with(import_module(_modules.DEFAULT_MODULE_NAME))
+
+
+@patch('sagemaker_containers._files.download_and_extract')
+@patch('sagemaker_containers._modules.install')
+@patch('importlib.import_module')
+@patch('six.moves.reload_module')
+@patch('sagemaker_containers._modules.exists')
+def test_import_module_exists(exists, reload, import_module, install, download_and_extract):
+
+    exists.return_value = True
+    _modules.import_module('s3://bucket/my-module')
+
+    exists.assert_called_with(_modules.DEFAULT_MODULE_NAME)
+    download_and_extract.assert_not_called()
+    install.assert_not_called()
     reload.assert_called_with(import_module(_modules.DEFAULT_MODULE_NAME))
 
 

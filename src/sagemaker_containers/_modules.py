@@ -238,10 +238,12 @@ def import_module(uri, name=DEFAULT_MODULE_NAME, cache=None):  # type: (str, str
         (module): the imported module
     """
     _warning_cache_deprecation(cache)
-    _files.download_and_extract(uri, name, _env.code_dir)
 
-    prepare(_env.code_dir, name)
-    install(_env.code_dir)
+    if not exists(name):
+        _files.download_and_extract(uri, name, _env.code_dir)
+        prepare(_env.code_dir, name)
+        install(_env.code_dir)
+
     try:
         module = importlib.import_module(name)
         six.moves.reload_module(module)
