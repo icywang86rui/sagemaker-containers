@@ -225,7 +225,7 @@ def run(module_name, args=None, env_vars=None, wait=True, capture_error=False):
         return _process.create(cmd, _errors.ExecuteUserScriptError, capture_error=capture_error)
 
 
-def import_module(uri, name=DEFAULT_MODULE_NAME, cache=None):  # type: (str, str, bool) -> module
+def import_module(uri, name=DEFAULT_MODULE_NAME, cache=True):  # type: (str, str, bool) -> module
     """Download, prepare and install a compressed tar file from S3 or provided directory as a module.
     SageMaker Python SDK saves the user provided scripts as compressed tar files in S3
     https://github.com/aws/sagemaker-python-sdk.
@@ -237,9 +237,8 @@ def import_module(uri, name=DEFAULT_MODULE_NAME, cache=None):  # type: (str, str
     Returns:
         (module): the imported module
     """
-    _warning_cache_deprecation(cache)
 
-    if not exists(name):
+    if not(cache and exists(name)):
         _files.download_and_extract(uri, name, _env.code_dir)
         prepare(_env.code_dir, name)
         install(_env.code_dir)

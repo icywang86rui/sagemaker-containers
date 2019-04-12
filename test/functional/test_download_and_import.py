@@ -56,7 +56,7 @@ def erase_user_module():
 def test_import_module(user_module, user_module_name):
     user_module.upload()
 
-    module = modules.import_module(user_module.url, user_module_name)
+    module = modules.import_module(user_module.url, user_module_name, cache=False)
 
     assert module.validate()
 
